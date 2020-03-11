@@ -13,28 +13,43 @@ function generateJson() {
     var lastRow = sheet.getLastRow();
     var output;
 
-    for (i = 1; i <= lastRow; i++) {
-        for (j = 1; j <= 4; j++) {
+    // for (i = 1; i <= lastRow; i++) {
+    //     for (j = 1; j <= 4; j++) {
 
-            if (sheet.getRange(i, j).isBlank()) {
-            } else {
-                readCell(i, j);
-            }
-        }
+    //         if (sheet.getRange(i, j).isBlank()) {
+    //         } else {
+    //             readCell(i, j);
+    //         }
+    //     }
 
-    }
+    // }
+/*PROCHAZECI ALG
+ vezme  prvek
+ pokud obsahuje{} prida do stringu a zachova se podle nasledujiciho
+                                                                 pokud sloup a: & { nic sjede o radek niz
+                                                                                & } ukonci prochazeni a inicuje predani JSONU
+                                                                 pokud sloup > a: & { sjede oradek niz(zachova next sloupec)
+                                                                                     & } snizi o sloupec a radek
+                                                                                                                    pokud ma carku smaze predchozi carku ve stringu
+                                                                pokud neobsahuje {} zkontroluje next sloupec a  prida "": 
+                                                                                                                        pokud najde v next sloupci obyc string pak prida obsah vedlejsiho sloupce v "",
+                                                                                                                        pokud najde v next sloupci {} zahovase podle vyse uvedeneho alg
+                                                                              
+ zjisti jestli neni 
+            pokud ano a neni sloupec a  */
+
 }
 
-function readCell(i, j) {
-    let cell = sheet.getRange(i, j);
-    let checkNext = sheet.getRange(i, j+1);
- if(checkNext === "{"){
-     addString(cell+":{")
- }else if(){
+// function readCell(i, j) {
+//     let cell = sheet.getRange(i, j);
+//     let checkNext = sheet.getRange(i, j+1);
+//  if(checkNext === "{"){
+//      addString(cell+":{")
+//  }else if(){
 
- }
-// promyslet neni potreba for cyklus spis alg prochazeni se switchem pri ruzne situaci nahoru i dolu vlozit si sem snippet pozad JSONU strukturovat mezerama
-}   
+//  }
+// // promyslet neni potreba for cyklus spis alg prochazeni se switchem pri ruzne situaci nahoru i dolu vlozit si sem snippet pozad JSONU strukturovat mezerama
+// }   
 
 
 
@@ -52,3 +67,33 @@ function readCell(i, j) {
     textArea.setSize("100%", "100%");
     SpreadsheetApp.getActiveSpreadsheet().show(app);
   };*/
+
+/* TAKHLE BY MOHL VYPADAT ZAPIS
+{			
+home	{		
+	lang	    en	
+	description	popis	
+	title	    titulek	
+	},		
+header	{		
+	h1	    nadpis1	
+	buttons	{	
+		    android	Google Play
+		    ios	    App Store
+		    },	
+	h2	    nadpis2"	
+	},		
+footer	{		
+	contactus	    contactus	
+	doclinks 	    {	
+		            privacy	    Datenschutz
+		            privacylink	https://www.iubenda.com/privacy-policy/30888138/full-legal
+		            tos	        Geschäftsbedingungen
+		            toslink	    /terms
+		            preskit	    PressKit
+		            preskitlink	https://www.dropbox.com/sh/cvddgfmsl6tbctw/AAA0tDN1doB4vwiGF9-q0EnTa?dl=0",
+		            copytd	    Copyright und Markenhinweise
+		            },	
+	}		
+}			
+*/
