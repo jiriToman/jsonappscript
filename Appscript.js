@@ -11,7 +11,16 @@ function generateJson() {
     var spreadsheet = SpreadsheetApp.getActive();
     var sheet = spreadsheet.getActiveSheet();
     var lastRow = sheet.getLastRow();
-    var output;
+    var collumn = 1;
+
+    for (i = 1; i <= lastRow; i++) {
+        let cell = sheet.getRange(i, j);
+        let checkNext = sheet.getRange(i, j+1);
+        parseRow(cell,checkNext);
+        
+        
+
+    }
 
     // for (i = 1; i <= lastRow; i++) {
     //     for (j = 1; j <= 4; j++) {
@@ -33,11 +42,34 @@ function generateJson() {
                                                                                                                     pokud ma carku smaze predchozi carku ve stringu
                                                                 pokud neobsahuje {} zkontroluje next sloupec a  prida "": 
                                                                                                                         pokud najde v next sloupci obyc string pak prida obsah vedlejsiho sloupce v "",
-                                                                                                                        pokud najde v next sloupci {} zahovase podle vyse uvedeneho alg
+                                                                                                                        
                                                                               
  zjisti jestli neni 
             pokud ano a neni sloupec a  */
 
+}
+
+function parseRow(cell, nextcell){
+    switch(cell.includes()){
+case "{":{
+    addString(cell);
+    collumn++;
+}
+case "}":{
+   
+    if(cell.includes(",")){
+        addString(cell);
+    }else{
+        deleteLastComma();
+        //mozna zakomponovat addString do deleteLastComma
+        addString(cell);
+        collum--;
+    }
+}
+default:{
+    addString("\""+cell+"\"\:"+"");
+}
+    }
 }
 
 // function readCell(i, j) {
