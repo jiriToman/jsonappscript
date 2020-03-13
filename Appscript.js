@@ -4,7 +4,7 @@ function onOpen() {
         { name: 'Vytvorit JSON sheetu', functionName: 'generateJson' }
     ];
     spreadsheet.addMenu('JSON', menuItems);
-  }
+}
 
 
 function generateJson() {
@@ -12,13 +12,14 @@ function generateJson() {
     var sheet = spreadsheet.getActiveSheet();
     var lastRow = sheet.getLastRow();
     var collumn = 1;
+    var json = "";
 
     for (i = 1; i <= lastRow; i++) {
         let cell = sheet.getRange(i, j);
-        let checkNext = sheet.getRange(i, j+1);
-        parseRow(cell,checkNext);
-        
-        
+        let checkNext = sheet.getRange(i, j + 1);
+        parseRow(cell, checkNext, json, collumn);
+
+
 
     }
 
@@ -32,45 +33,55 @@ function generateJson() {
     //     }
 
     // }
-/*PROCHAZECI ALG
- vezme  prvek
- pokud obsahuje{} prida do stringu a zachova se podle nasledujiciho
-                                                                 pokud sloup a: & { nic sjede o radek niz
-                                                                                & } ukonci prochazeni a inicuje predani JSONU
-                                                                 pokud sloup > a: & { sjede oradek niz(zachova next sloupec)
-                                                                                     & } snizi o sloupec a radek
-                                                                                                                    pokud ma carku smaze predchozi carku ve stringu
-                                                                pokud neobsahuje {} zkontroluje next sloupec a  prida "": 
-                                                                                                                        pokud najde v next sloupci obyc string pak prida obsah vedlejsiho sloupce v "",
-                                                                                                                        
-                                                                              
- zjisti jestli neni 
-            pokud ano a neni sloupec a  */
+    /*PROCHAZECI ALG
+     vezme  prvek
+     pokud obsahuje{} prida do stringu a zachova se podle nasledujiciho
+                                                                     pokud sloup a: & { nic sjede o radek niz
+                                                                                    & } ukonci prochazeni a inicuje predani JSONU
+                                                                     pokud sloup > a: & { sjede oradek niz(zachova next sloupec)
+                                                                                         & } snizi o sloupec a radek
+                                                                                                                        pokud ma carku smaze predchozi carku ve stringu
+                                                                    pokud neobsahuje {} zkontroluje next sloupec a  prida "": 
+                                                                                                                            pokud najde v next sloupci obyc string pak prida obsah vedlejsiho sloupce v "",
+                                                                                                                            
+                                                                                  
+     zjisti jestli neni 
+                pokud ano a neni sloupec a  */
 
 }
 
-function parseRow(cell, nextcell){
-    switch(cell.includes()){
-case "{":{
-    addString(cell);
-    collumn++;
-}
-case "}":{
-   
-    if(cell.includes(",")){
-        addString(cell);
-    }else{
-        deleteLastComma();
-        //mozna zakomponovat addString do deleteLastComma
-        addString(cell);
-        collum--;
+function parseRow(cell, nextcell, json, collumn) {
+    switch (cell.includes()) {
+        case "{": {
+            json = addString(json, "{");
+            collumn++;
+        }
+        case "}": {
+
+            if (cell.includes(",")) {
+                json = addString(json, cell);
+            } else {
+                json = deleteLastComma(json);
+                json = addString(json, "}");
+                collumn--;
+            }
+        }
+        default: {
+            addString("\"" + cell + "\":" + "\"" + nextcell + "\",");
+        }
     }
 }
-default:{
-    addString("\""+cell+"\"\:"+"");
+function addString(json, input) {
+    json = json + input;
+    return json;
 }
+function deleteLastComma(json){
+    if(json.charAt(json.lenght - 1)==","){
+        json = json.substring(0,json.lenght -1);
     }
+return json;
 }
+
 
 // function readCell(i, j) {
 //     let cell = sheet.getRange(i, j);
@@ -102,23 +113,23 @@ default:{
   };*/
 
 /* TAKHLE BY MOHL VYPADAT ZAPIS
-{			
-home	{		
-	lang	    en	
-	description	popis	
-	title	    titulek	
-	},		
-header	{		
-	h1	    nadpis1	
-	buttons	{	
+{
+home	{
+	lang	    en
+	description	popis
+	title	    titulek
+	},
+header	{
+	h1	    nadpis1
+	buttons	{
 		    android	Google Play
 		    ios	    App Store
-		    },	
-	h2	    nadpis2"	
-	},		
-footer	{		
-	contactus	    contactus	
-	doclinks 	    {	
+		    },
+	h2	    nadpis2"
+	},
+footer	{
+	contactus	    contactus
+	doclinks 	    {
 		            privacy	    Datenschutz
 		            privacylink	https://www.iubenda.com/privacy-policy/30888138/full-legal
 		            tos	        Geschäftsbedingungen
@@ -126,7 +137,7 @@ footer	{
 		            preskit	    PressKit
 		            preskitlink	https://www.dropbox.com/sh/cvddgfmsl6tbctw/AAA0tDN1doB4vwiGF9-q0EnTa?dl=0",
 		            copytd	    Copyright und Markenhinweise
-		            },	
-	}		
-}			
+		            },
+	}
+}
 */
