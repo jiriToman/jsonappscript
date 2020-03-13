@@ -90,6 +90,7 @@ default:{
 // http://blog.pamelafox.org/2013/06/exporting-google-spreadsheet-as-json.html https://gist.github.com/pamelafox/1878143 https://gist.github.com/simonepri/c3e62eb0291d3230d0d0481cf18c3480 ;
 // sheet do objectu https://gist.github.com/jonobr1/45fc5f41a219153aaa18 ;
 //google addon https://github.com/Synthoid/ExportSheetData
+// netsed json https://stackoverflow.com/questions/47555347/creating-a-json-object-from-google-sheets https://stackoverflow.com/questions/47577712/creating-a-nested-json-object-with-google-sheets
 
 /*function exportJSON() {
     var app = UiApp.createApplication().setTitle('JSON export results - select all and copy!');
